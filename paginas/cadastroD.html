@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbra Ecclesia | Cadastro de dados</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="superior">
+            <a href="index.html"><img src="../assets/logo_umbra.png" alt="logo_umbra"></a>
+            <h1 class="titulo">Umbra Ecclesia</h1>
+        </div>
+    </div>
+    <div class="questionario">
+        <label for="opt_papa">Selecione seu papa favorito</label><br><br>
+        <select id="opt_papa">
+            <option value="">Nihil (Papa Emeritus 0)</option>
+            <option value="">Primo (Papa Emeritus I)</option>
+            <option value="">Secondo (Papa Emeritus II)</option>
+            <option value="">Terzo (Papa Emeritus III)</option>
+            <option value="">Cardinal Copia</option>
+            <option value="">Cuarto (Papa Emeritus IV)</option>
+            <option value="">Perpetua (Papa Emeritus V)</option>
+        </select><br><br>
+        <label for="ipt_musica">Insira sua musica favorita de Ghost</label><br><br>
+        <input type="text" id="ipt_musica"><br><br>
+        <label for="opt_album">Selecione seu album favorito</label><br><br>
+        <option value=""><img src="../assets/albuns/opus_eponimous.png" alt="opus_eponimous"></option>
+        <option value=""><img src="../assets/albuns/infestissuman.png" alt="infestissuman"></option>
+        <option value=""><img src="../assets/albuns/meliora.png" alt="meliora"></option>
+        <option value=""><img src="../assets/albuns/ghosts.png" alt="if_you_have_ghosts"></option>
+        <option value=""><img src="../assets/albuns/impera.png" alt="impera"></option>
+        <option value=""><img src="../assets/albuns/prequelle.png" alt="prequelle"></option>
+        <option value=""><img src="../assets/albuns/seven_inches.png" alt="seven_inches_of_satanic_panic"></option>
+        <option value=""><img src="../assets/albuns/skeleta.png" alt="skeleta"></option><br><br>
+        <label for="ipt_personagem">Insira seu personagem favorito</label><br><br>
+        <input type="text" id="ipt_personagem">
+    </div>
+    <button onclick="cadastrar()">Cadastrar resposta</button>
+</body>
+</html>
