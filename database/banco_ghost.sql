@@ -20,11 +20,13 @@ CREATE TABLE album (
 CREATE TABLE musica (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
+    autor CHAR(5) NOT NULL,
     id_spotify VARCHAR(100) UNIQUE,
     duracao INT,
     fk_album INT NOT NULL,
 
     CONSTRAINT fk_musica_album FOREIGN KEY (fk_album) REFERENCES album(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT autor CHECK autor == "GHOST"
 );
 
 CREATE TABLE personagem (
