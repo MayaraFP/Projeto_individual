@@ -1,9 +1,9 @@
-USE sprint3;
+USE banco_ghost;
 
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    nome_usuario VARCHAR(30) NOT NULL UNIQUE,
+    nome_usuario VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -22,9 +22,9 @@ CREATE TABLE musica (
     titulo VARCHAR(100) NOT NULL,
     id_spotify VARCHAR(100) UNIQUE,
     duracao INT,
-    fkAlbum INT NOT NULL,
+    fk_album INT NOT NULL,
 
-    CONSTRAINT chFkAlbum FOREIGN KEY (fkAlbum) REFERENCES album(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_musica_album FOREIGN KEY (fk_album) REFERENCES album(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE personagem (
@@ -33,45 +33,45 @@ CREATE TABLE personagem (
 );
 
 CREATE TABLE usuario_musica (
-    fkUsuario INT NOT NULL,
-    fkMusica INT NOT NULL,
+    fk_usuario INT NOT NULL,
+    fk_musica INT NOT NULL,
     favorita BOOLEAN DEFAULT FALSE,
     nota DECIMAL(3,1),
     data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (fkUsuario, fkMusica),
+    PRIMARY KEY (fk_usuario, fk_musica),
 
-    CONSTRAINT chFkUsuario FOREIGN KEY (fkUsuario) REFERENCES usuario(id) ON DELETE CASCADE,
+    CONSTRAINT fk_usuario_musica_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
-    CONSTRAINT chFkMusica FOREIGN KEY (fkMusica) REFERENCES musica(id) ON DELETE CASCADE,
+    CONSTRAINT fk_usuario_musica_musica FOREIGN KEY (fk_musica) REFERENCES musica(id) ON DELETE CASCADE,
 
     CONSTRAINT chk_nota_musica
     CHECK (nota IS NULL OR nota BETWEEN 0 AND 10)
 );
 
 CREATE TABLE usuario_album (
-    fkUsuario INT NOT NULL,
-    fkAlbum INT NOT NULL,
+    fk_usuario INT NOT NULL,
+    fk_album INT NOT NULL,
     favorito BOOLEAN DEFAULT FALSE,
     nota DECIMAL(3,1),
     data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (fkUsuario, fkAlbum),
+    PRIMARY KEY (fk_usuario, fk_album),
 
-    CONSTRAINT chFkUsuaioua FOREIGN KEY (fkUsuario) REFERENCES usuario(id) ON DELETE CASCADE,
+    CONSTRAINT fk_usuario_album_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
-    CONSTRAINT chFkAlbumua FOREIGN KEY (fkAlbum) REFERENCES album(id) ON DELETE CASCADE,
+    CONSTRAINT fk_usuario_album_album FOREIGN KEY (fk_album) REFERENCES album(id) ON DELETE CASCADE,
 
     CONSTRAINT chk_nota_album
     CHECK (nota IS NULL OR nota BETWEEN 0 AND 10)
 );
 
 CREATE TABLE usuario_papa_favorito (
-    fkUsuario INT PRIMARY KEY,
-    fkPersonagem INT NOT NULL,
+    fk_usuario INT PRIMARY KEY,
+    fk_personagem INT NOT NULL,
     data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT chFkUsuariopf FOREIGN KEY (fkUsuario) REFERENCES usuario(id) ON DELETE CASCADE,
+    CONSTRAINT fk_usuario_papa_favorito_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
-    CONSTRAINT chFkPersonagempf FOREIGN KEY (fkPersonagem) REFERENCES personagem(id) ON DELETE CASCADE
+    CONSTRAINT fk_usuario_papa_favorito_personagem FOREIGN KEY (fk_personagem) REFERENCES personagem(id) ON DELETE CASCADE
 ) ;
