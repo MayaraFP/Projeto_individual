@@ -38,7 +38,6 @@ CREATE TABLE usuario_musica (
     fk_usuario INT NOT NULL,
     fk_musica INT NOT NULL,
     favorita BOOLEAN DEFAULT FALSE,
-    nota DECIMAL(3,1),
     data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (fk_usuario, fk_musica),
@@ -46,32 +45,22 @@ CREATE TABLE usuario_musica (
     CONSTRAINT fk_usuario_musica_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
     CONSTRAINT fk_usuario_musica_musica FOREIGN KEY (fk_musica) REFERENCES musica(id) ON DELETE CASCADE,
-
-    CONSTRAINT chk_nota_musica
-    CHECK (nota IS NULL OR nota BETWEEN 0 AND 10)
 );
 
 CREATE TABLE usuario_album (
     fk_usuario INT NOT NULL,
     fk_album INT NOT NULL,
-    favorito BOOLEAN DEFAULT FALSE,
-    nota DECIMAL(3,1),
-    data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (fk_usuario, fk_album),
 
     CONSTRAINT fk_usuario_album_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
     CONSTRAINT fk_usuario_album_album FOREIGN KEY (fk_album) REFERENCES album(id) ON DELETE CASCADE,
-
-    CONSTRAINT chk_nota_album
-    CHECK (nota IS NULL OR nota BETWEEN 0 AND 10)
 );
 
 CREATE TABLE usuario_papa_favorito (
     fk_usuario INT PRIMARY KEY,
     fk_personagem INT NOT NULL,
-    data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_usuario_papa_favorito_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
