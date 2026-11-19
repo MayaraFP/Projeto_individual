@@ -26,7 +26,7 @@ CREATE TABLE musica (
     fk_album INT NOT NULL,
 
     CONSTRAINT fk_musica_album FOREIGN KEY (fk_album) REFERENCES album(id) ON DELETE CASCADE ON UPDATE CASCADE
-    CONSTRAINT autor CHECK autor == "GHOST"
+    CONSTRAINT chk_autor CHECK (autor = "GHOST")
 );
 
 CREATE TABLE personagem (
