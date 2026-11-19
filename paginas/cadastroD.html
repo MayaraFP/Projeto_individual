@@ -4,6 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Umbra Ecclesia | Cadastro de dados</title>
+    <style>
+        .album-opcoes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 16px;
+            max-width: 760px;
+        }
+
+        .album-opcao {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .album-opcao input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .album-opcao img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 3px solid transparent;
+            border-radius: 8px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .album-opcao span {
+            display: block;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        .album-opcao:hover img,
+        .album-opcao input:focus-visible + img,
+        .album-opcao input:checked + img {
+            border-color: #7c3aed;
+            transform: scale(1.03);
+        }
+    </style>
 </head>
 <body>
     <div class="sidebar">
@@ -33,17 +74,50 @@
         </select><br><br>
         <label for="ipt_musica">Insira sua musica favorita de Ghost</label><br><br>
         <input type="text" id="ipt_musica"><br><br>
-        <label for="opt_album">Selecione seu album favorito</label><br><br>
-        <select id="opt_album">
-            <option value="opus"><img src="../assets/albuns/opus_eponimous.png" alt="opus_eponimous"></option>
-            <option value="infestissuman"><img src="../assets/albuns/infestissuman.png" alt="infestissuman"></option>
-            <option value="meliora"><img src="../assets/albuns/meliora.png" alt="meliora"></option>
-            <option value="ghosts"><img src="../assets/albuns/ghosts.png" alt="if_you_have_ghosts"></option>
-            <option value="impera"><img src="../assets/albuns/impera.png" alt="impera"></option>
-            <option value="prequelle"><img src="../assets/albuns/prequelle.png" alt="prequelle"></option>
-            <option value="seven_inches"><img src="../assets/albuns/seven_inches.png" alt="seven_inches_of_satanic_panic"></option>
-            <option value="skeleta"><img src="../assets/albuns/skeleta.png" alt="skeleta"></option>
-        </select><br><br>
+        <label>Selecione seu album favorito</label><br><br>
+        <input type="hidden" id="opt_album" value="">
+        <div class="album-opcoes" aria-label="Álbuns de Ghost">
+            <label class="album-opcao">
+                <input type="radio" name="album" value="opus">
+                <img src="../assets/albuns/opus_eponimous.png" alt="Opus Eponymous">
+                <span>Opus Eponymous</span>
+            </label>
+            <label class="album-opcao">
+                <input type="radio" name="album" value="infestissuman">
+                <img src="../assets/albuns/infestissuman.png" alt="Infestissumam">
+                <span>Infestissumam</span>
+            </label>
+            <label class="album-opcao">
+                <input type="radio" name="album" value="meliora">
+                <img src="../assets/albuns/meliora.png" alt="Meliora">
+                <span>Meliora</span>
+            </label>
+            <label class="album-opcao">
+                <input type="radio" name="album" value="ghosts">
+                <img src="../assets/albuns/ghosts.png" alt="If You Have Ghosts">
+                <span>If You Have Ghosts</span>
+            </label>
+            <label class="album-opcao">
+                <input type="radio" name="album" value="impera">
+                <img src="../assets/albuns/impera.png" alt="Impera">
+                <span>Impera</span>
+            </label>
+            <label class="album-opcao">
+                <input type="radio" name="album" value="prequelle">
+                <img src="../assets/albuns/prequelle.png" alt="Prequelle">
+                <span>Prequelle</span>
+            </label>
+            <label class="album-opcao">
+                <input type="radio" name="album" value="seven_inches">
+                <img src="../assets/albuns/seven_inches.png" alt="Seven Inches of Satanic Panic">
+                <span>Seven Inches</span>
+            </label>
+            <label class="album-opcao">
+                <input type="radio" name="album" value="skeleta">
+                <img src="../assets/albuns/skeleta.png" alt="Skeleta">
+                <span>Skeleta</span>
+            </label>
+        </div><br>
         <label for="ipt_personagem">Insira seu personagem favorito</label><br><br>
         <input type="text" id="ipt_personagem">
     </div>
@@ -54,7 +128,8 @@
     function cadastrar(){
         var papa = opt_papa.value;
         var musica = ipt_musica.value;
-        var album = opt_album.value;
+        var albumSelecionado = document.querySelector('input[name="album"]:checked');
+        var album = albumSelecionado ? albumSelecionado.value : "";
         var personagem = ipt_personagem.value;
 
     // Verificando se há algum campo em branco
