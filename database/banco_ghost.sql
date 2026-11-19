@@ -42,26 +42,36 @@ CREATE TABLE usuario_musica (
 
     CONSTRAINT fk_usuario_musica_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
+<<<<<<< HEAD
     CONSTRAINT fk_usuario_musica_musica FOREIGN KEY (fk_musica) REFERENCES musica(id) ON DELETE CASCADE
+=======
+    CONSTRAINT fk_usuario_musica_musica FOREIGN KEY (fk_musica) REFERENCES musica(id) ON DELETE CASCADE,
+>>>>>>> 3c01a7ea1ef033716ffbf945004fdf224415276c
 );
 
 CREATE TABLE usuario_album (
     fk_usuario INT NOT NULL,
     fk_album INT NOT NULL,
+<<<<<<< HEAD
     favorito BOOLEAN DEFAULT FALSE,
     data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+=======
+>>>>>>> 3c01a7ea1ef033716ffbf945004fdf224415276c
 
     PRIMARY KEY (fk_usuario, fk_album),
 
     CONSTRAINT fk_usuario_album_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
+<<<<<<< HEAD
     CONSTRAINT fk_usuario_album_album FOREIGN KEY (fk_album) REFERENCES album(id) ON DELETE CASCADE
+=======
+    CONSTRAINT fk_usuario_album_album FOREIGN KEY (fk_album) REFERENCES album(id) ON DELETE CASCADE,
+>>>>>>> 3c01a7ea1ef033716ffbf945004fdf224415276c
 );
 
 CREATE TABLE usuario_papa_favorito (
     fk_usuario INT PRIMARY KEY,
     fk_personagem INT NOT NULL,
-    data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_usuario_papa_favorito_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
