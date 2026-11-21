@@ -71,3 +71,48 @@ OBSERVAÇÕES PARA EXECUÇÃO
      existentes no catálogo, ignorando diferenças entre maiúsculas e
      minúsculas.
    - O servidor pode ser iniciado com npm start ou npm run dev.
+
+CORREÇÃO DO ERRO DE LOGIN: aguardar()
+--------------------------------------
+
+PROMPT DO USUÁRIO
+-----------------
+"na pagina de login quando tento entrar com um usuario cadastrado esta dando um erro, sendo esse que aguardar() nao fora definido, como posso resolver esse problema e por qual motivo ele ocorre?"
+
+SOLICITAÇÃO COMPLEMENTAR
+-------------------------
+"faca as alteracoes mencionadas anteriormente e documente as o meu prompt e a sua resposta num arquivo de texto armazenado em Projeto_individual"
+
+CAUSA IDENTIFICADA
+------------------
+
+   - paginas/login.html chamava aguardar() na função entrar().
+   - O arquivo paginas/js/sessao.js era referenciado, mas não existia no
+     projeto.
+   - Como o navegador não carregava esse arquivo, aguardar() e
+     finalizarAguardar() não eram definidas.
+   - O erro acontecia antes da chamada para /usuarios/autenticar, portanto
+     não era um problema do banco de dados ou das credenciais.
+
+ALTERAÇÕES REALIZADAS
+---------------------
+
+   - Criado paginas/js/sessao.js com as funções aguardar(),
+     finalizarAguardar() e limparSessao().
+   - As funções usam document.getElementById() e verificam se o elemento
+     existe antes de alterar sua interface.
+   - login.html passou a buscar explicitamente os valores de ipt_email,
+     ipt_senha, cardErro e mensagem_erro.
+   - A referência antiga a sessionStorage.AQUARIOS foi removida, pois o
+     projeto atual não utiliza mais dados de aquários.
+   - sumirMensagem() também passou a usar document.getElementById().
+
+VALIDAÇÃO
+----------
+
+   - O arquivo fica disponível pelo caminho /js/sessao.js porque paginas é
+     a pasta estática do Express.
+   - Ao acessar http://localhost:3333/js/sessao.js, o conteúdo do arquivo
+     deve ser exibido.
+   - Com o servidor em execução, o login deixa de interromper a função
+     entrar() no primeiro comando.
