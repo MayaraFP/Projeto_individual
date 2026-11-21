@@ -6,7 +6,8 @@ function cadastrar(req, res) {
     var musica = req.body.tituloServer;
     var album = req.body.senhaServer;
 
-    if (!usuarioId || !papa || !musica || !album || !req.body.personagemServer) {
+    if (!usuarioId || !Number.isInteger(Number(usuarioId)) || Number(usuarioId) <= 0 ||
+        !papa || !musica || !album || !req.body.personagemServer) {
         return res.status(400).json({ erro: "Todos os campos da preferência são obrigatórios." });
     }
 
@@ -16,6 +17,12 @@ function cadastrar(req, res) {
         })
         .catch(function (erro) {
             console.error("Erro ao cadastrar preferências:", erro);
+            if (erro.code === "ER_DUP_ENTRY") {
+                return res.status(409).json({
+                    erro: "Este usuário já possui uma resposta cadastrada. A tabela permite apenas uma resposta por usuário."
+                });
+            }
+
             res.status(500).json({ erro: erro.message || "Não foi possível cadastrar as preferências." });
         });
 }

@@ -53,12 +53,12 @@ ALTERAÇÕES REALIZADAS
    - O login agora redireciona para /dashboard.html, que é o arquivo existente.
    - O formulário exige um usuário autenticado via sessionStorage.ID_USUARIO.
 
-RESTRIÇÕES RESPEITADAS
-----------------------
+RESTRIÇÕES DA IMPLEMENTAÇÃO INICIAL
+-----------------------------------
 
-   - O arquivo src/database/banco_ghost_v2.sql não foi alterado.
+   - Na implementação inicial, o arquivo src/database/banco_ghost_v2.sql não
+     foi alterado, conforme solicitado naquele momento.
    - Os arquivos .env e .env.dev não foram alterados.
-   - Nenhuma tabela, coluna ou relacionamento foi criado no banco.
    - A quantidade de registros foi definida como a quantidade de usuários
      cadastrados na tabela usuario.
 
@@ -116,3 +116,67 @@ VALIDAÇÃO
      deve ser exibido.
    - Com o servidor em execução, o login deixa de interromper a função
      entrar() no primeiro comando.
+
+CORREÇÃO DO CADASTRO DE PREFERÊNCIAS
+-------------------------------------
+
+PROBLEMA IDENTIFICADO
+---------------------
+
+   - src/models/preferenciaModel.js utilizava ON DUPLICATE KEY UPDATE para
+     usuario_papa_favorito e usuario_musica.
+   - Também utilizava INSERT IGNORE para usuario_album.
+   - Por isso, quando já havia uma chave primária para o usuário, o MySQL
+     atualizava ou ignorava a nova resposta em vez de realizar um cadastro
+     explícito.
+
+CORREÇÃO REALIZADA
+------------------
+
+   - Removido ON DUPLICATE KEY UPDATE de usuario_papa_favorito.
+   - Removido ON DUPLICATE KEY UPDATE de usuario_musica.
+   - Removido INSERT IGNORE de usuario_album.
+   - As três relações agora usam INSERT explícito.
+   - Quando o mesmo usuário tenta cadastrar uma segunda resposta, a API
+     retorna HTTP 409 informando que já existe uma resposta cadastrada.
+
+LIMITAÇÃO DO ESQUEMA ATUAL
+--------------------------
+
+   - usuario_papa_favorito possui PRIMARY KEY (fk_usuario).
+   - usuario_musica possui PRIMARY KEY (fk_usuario, fk_musica).
+   - usuario_album possui PRIMARY KEY (fk_usuario, fk_album).
+   - Portanto, o banco atual permite uma resposta de papa por usuário e não
+     permite duplicar a mesma combinação de usuário e música ou álbum.
+   - Essa limitação foi respeitada no código da API.
+
+ALTERAÇÕES POSTERIORES NO BANCO
+-------------------------------
+
+   - As tabelas usuario_musica, usuario_album e usuario_papa_favorito agora
+     possuem um id AUTO_INCREMENT próprio.
+   - As chaves primárias passaram a utilizar somente o id, permitindo várias
+     respostas do mesmo usuário.
+   - fk_usuario passou a ser NOT NULL em usuario_papa_favorito.
+   - As consultas de KPI e dos gráficos no arquivo SQL foram corrigidas para
+     utilizar personagem em vez de uma tabela papa inexistente.
+   - Também foram adicionadas consultas para músicas favoritas e para o top 3
+     de álbuns.
+
+FLUXO SEQUENCIAL DO CADASTRO
+----------------------------
+
+   - O papa selecionado é pesquisado em personagem pelo nome.
+   - O ID encontrado é inserido em usuario_papa_favorito junto com o ID do
+     usuário autenticado.
+   - O álbum selecionado é pesquisado em album pelo nome.
+   - A música informada é inserida em musica com autor GHOST e o ID do álbum.
+   - O insertId retornado pelo MySQL é utilizado imediatamente em
+     usuario_musica, criando o vínculo da música com o usuário.
+   - Por fim, o álbum é inserido em usuario_album.
+   - Não existe mais consulta posterior para localizar a música recém-criada
+     nem comando UPDATE nesse fluxo.
+
+   - Depois de alterar o backend, é necessário reiniciar o servidor Node para
+     carregar o novo código. Com npm run dev o nodemon normalmente reinicia
+     automaticamente; com npm start, encerre e execute o comando novamente.

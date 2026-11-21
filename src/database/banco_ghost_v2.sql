@@ -34,12 +34,13 @@ CREATE TABLE personagem (
 );
 
 CREATE TABLE usuario_musica (
+    id INT AUTO_INCREMENT,
     fk_usuario INT NOT NULL,
     fk_musica INT NOT NULL,
     favorita BOOLEAN DEFAULT FALSE,
     data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (fk_usuario, fk_musica),
+    PRIMARY KEY (id),
 
     CONSTRAINT fk_usuario_musica_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
@@ -47,10 +48,11 @@ CREATE TABLE usuario_musica (
 );
 
 CREATE TABLE usuario_album (
+    id INT AUTO_INCREMENT,
     fk_usuario INT NOT NULL,
     fk_album INT NOT NULL,
 
-    PRIMARY KEY (fk_usuario, fk_album),
+    PRIMARY KEY (id),
 
     CONSTRAINT fk_usuario_album_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
@@ -58,36 +60,70 @@ CREATE TABLE usuario_album (
 );
 
 CREATE TABLE usuario_papa_favorito (
-    fk_usuario INT PRIMARY KEY,
+    id INT AUTO_INCREMENT,
+    fk_usuario INT NOT NULL,
     fk_personagem INT NOT NULL,
 
     CONSTRAINT fk_usuario_papa_favorito_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
 
-    CONSTRAINT fk_usuario_papa_favorito_personagem FOREIGN KEY (fk_personagem) REFERENCES personagem(id) ON DELETE CASCADE
+    CONSTRAINT fk_usuario_papa_favorito_personagem FOREIGN KEY (fk_personagem) REFERENCES personagem(id) ON DELETE CASCADE,
+
+    PRIMARY KEY (id)
 ) ;
 
 -- KPI quantidade de registros
-SELECT COUNT(data_registro) AS "Sermoes cadastrados" FROM usuario_papa_favorito;
-
--- KPI album favorito
-SELECT
-	nome_papa,
-    COUNT(fk_papa) AS "Papa favorito"
-FROM usuario_papa_favorito JOIN papa ON usuario_papa_favorito.fk_papa = papa.id
-GROUP BY fk_papa
-ORDER BY "Papa favorito" DESC
-LIMIT 1;
+SELECT COUNT(*) AS "Registros cadastrados"
+FROM usuario_papa_favorito;
 
 -- KPI papa favorito
 SELECT
-	album.nome,
-    COUNT(fk_album) AS "Album favorito"
-FROM usuario_album JOIN album ON usuario_album.fk_album = album.id
-GROUP BY fk_album
-ORDER BY "Album favorito" DESC
+    p.nome AS papa,
+    COUNT(*) AS quantidade
+FROM usuario_papa_favorito upf
+JOIN personagem p ON upf.fk_personagem = p.id
+GROUP BY p.id, p.nome
+ORDER BY quantidade DESC, p.nome ASC
 LIMIT 1;
 
--- SELECT para grafico de papas
+-- KPI album favorito
+SELECT
+    a.nome AS album,
+    COUNT(*) AS quantidade
+FROM usuario_album ua
+JOIN album a ON ua.fk_album = a.id
+GROUP BY a.id, a.nome
+ORDER BY quantidade DESC, a.nome ASC
+LIMIT 1;
 
+-- Dados para o grafico de papas
+SELECT
+    p.nome AS papa,
+    COUNT(*) AS quantidade
+FROM usuario_papa_favorito upf
+JOIN personagem p ON upf.fk_personagem = p.id
+GROUP BY p.id, p.nome
+ORDER BY quantidade DESC, p.nome ASC;
+
+-- Dados para o grafico de musicas favoritas
+SELECT
+    m.titulo AS musica,
+    COUNT(*) AS quantidade
+FROM usuario_musica um
+JOIN musica m ON um.fk_musica = m.id
+WHERE um.favorita = TRUE
+GROUP BY m.id, m.titulo
+ORDER BY quantidade DESC, m.titulo ASC
+LIMIT 10;
+
+-- Top 3 albuns favoritos
+SELECT
+    a.nome AS album,
+    COUNT(*) AS quantidade,
+    a.imagem_url
+FROM usuario_album ua
+JOIN album a ON ua.fk_album = a.id
+GROUP BY a.id, a.nome, a.imagem_url
+ORDER BY quantidade DESC, a.nome ASC
+LIMIT 3;
 
 SELECT * FROM usuario;
