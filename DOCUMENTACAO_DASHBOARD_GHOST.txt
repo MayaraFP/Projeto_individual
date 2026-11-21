@@ -1,0 +1,73 @@
+DOCUMENTAÇÃO - DASHBOARD UMBRA ECCLESIA
+=======================================
+
+PROMPT DO USUÁRIO
+-----------------
+"analisando a pagina de dashboard, quais alteracoes no codigo eu devo fazer para se adequar ao meu projeto atual cujo tema e Ghost, utilizando como base de dados o banco_ghost_v2 e considerando que terei 3 kpi's onde uma mostra a quantidade de registros, outra mostra a quantidade de musicas cadastradas e o ultimo mostra qual o papa favorito dos usuarios. Ja os graficos, que serao dois, um vai mostrar os papas favoritos em um grafico de rosca e o outro mostraria as musicas favoritas da comunidade num grafico de barras e no rodape apresentaria o top 3 albuns mais populares da comunidade"
+
+SOLICITAÇÃO COMPLEMENTAR
+-------------------------
+"faca todas as alteracoes exceto as alteracoes do banco de dados e se mantenha fiel aos campos ali ja existentes e documente a sua resposta e o meu prompt num documento de texto salvo dentro de Projeto_individual"
+
+ALTERAÇÕES REALIZADAS
+---------------------
+
+1. Backend do dashboard
+   - Criado src/models/dashboardModel.js.
+   - Criado src/controllers/dashboardController.js.
+   - Criado src/routes/dashboard.js.
+   - Criados os endpoints GET /dashboard/kpis, /dashboard/papas,
+     /dashboard/musicas e /dashboard/albuns.
+   - As consultas utilizam as tabelas existentes: usuario, musica,
+     personagem, usuario_papa_favorito, usuario_musica, album e usuario_album.
+
+2. Dashboard visual
+   - paginas/dashboard.html foi reescrito como um único documento HTML.
+   - Foram removidas as referências ao dashboard legado de aquários,
+     medidas, temperatura e fk_aquario.
+   - Foram adicionados três KPIs: usuários cadastrados, músicas cadastradas
+     e papa favorito.
+   - Foi adicionado gráfico de rosca para papas favoritos.
+   - Foi adicionado gráfico de barras horizontal para músicas favoritas.
+   - Foi adicionado ranking com os três álbuns mais populares.
+   - Criado paginas/dashboard.css com a identidade visual escura, vermelha
+     e dourada do projeto Ghost e comportamento responsivo.
+
+3. Preferências do usuário
+   - Criados src/models/preferenciaModel.js,
+     src/controllers/preferenciaController.js e
+     src/routes/preferencias.js.
+   - Criado POST /preferencias/cadastrar.
+   - O formulário continua usando os campos existentes: papa, musica,
+     album e personagem.
+   - Papa, música e álbum são relacionados às tabelas existentes.
+   - A música é criada no catálogo caso ainda não exista para o álbum
+     selecionado e depois marcada como favorita para o usuário.
+   - O campo personagem continua sendo obrigatório no formulário, mas não é
+     persistido porque o banco atual não possui uma tabela de relacionamento
+     para personagem escolhido pelo usuário. Essa limitação foi mantida para
+     não alterar o banco, conforme solicitado.
+
+4. Fluxo de navegação
+   - app.js passou a registrar as rotas /dashboard e /preferencias.
+   - O login agora redireciona para /dashboard.html, que é o arquivo existente.
+   - O formulário exige um usuário autenticado via sessionStorage.ID_USUARIO.
+
+RESTRIÇÕES RESPEITADAS
+----------------------
+
+   - O arquivo src/database/banco_ghost_v2.sql não foi alterado.
+   - Os arquivos .env e .env.dev não foram alterados.
+   - Nenhuma tabela, coluna ou relacionamento foi criado no banco.
+   - A quantidade de registros foi definida como a quantidade de usuários
+     cadastrados na tabela usuario.
+
+OBSERVAÇÕES PARA EXECUÇÃO
+-------------------------
+
+   - O banco precisa possuir registros nas tabelas album e personagem para
+     que o formulário consiga relacionar as preferências.
+   - Os nomes enviados pelo formulário precisam corresponder aos nomes
+     existentes no catálogo, ignorando diferenças entre maiúsculas e
+     minúsculas.
+   - O servidor pode ser iniciado com npm start ou npm run dev.

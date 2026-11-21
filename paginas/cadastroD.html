@@ -1,192 +1,110 @@
 <!DOCTYPE html>
-<html lang="pt_br">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umbra Ecclesia | Cadastro de dados</title>
+    <title>Umbra Ecclesia | Preferências</title>
+    <link rel="stylesheet" href="/dashboard.css">
     <style>
-        .album-opcoes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 16px;
-            max-width: 760px;
-        }
-
-        .album-opcao {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .album-opcao input {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .album-opcao img {
-            display: block;
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border: 3px solid transparent;
-            border-radius: 8px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .album-opcao span {
-            display: block;
-            margin-top: 6px;
-            text-align: center;
-        }
-
-        .album-opcao:hover img,
-        .album-opcao input:focus-visible + img,
-        .album-opcao input:checked + img {
-            border-color: #7c3aed;
-            transform: scale(1.03);
-        }
+        .form-page { margin: 0 auto; max-width: 950px; padding: 55px 5vw 90px; }
+        .preference-form { background: #1b1719; border: 1px solid #493b36; padding: clamp(22px, 5vw, 48px); }
+        .field { display: grid; gap: 9px; margin: 24px 0; }
+        label { color: #c49a52; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; }
+        select, input[type="text"] { background: #111012; border: 1px solid #604b42; color: #e8dfd2; font: inherit; padding: 13px; width: 100%; }
+        .album-opcoes { display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+        .album-opcao { cursor: pointer; display: block; }
+        .album-opcao input { opacity: 0; position: absolute; }
+        .album-opcao img { border: 2px solid transparent; display: block; height: 130px; object-fit: cover; width: 100%; }
+        .album-opcao span { color: #e8dfd2; display: block; font-size: .82rem; padding-top: 8px; text-align: center; }
+        .album-opcao input:checked + img, .album-opcao:hover img { border-color: #c49a52; }
+        .form-actions { align-items: center; display: flex; gap: 18px; margin-top: 30px; }
+        button { background: #b3122f; border: 1px solid #e0c278; color: #fff; cursor: pointer; font: inherit; padding: 14px 24px; }
+        .feedback { color: #e0c278; min-height: 1.4em; }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="superior">
-            <a href="index.html"><img src="../assets/logo_umbra.png" alt="logo_umbra"></a>
-            <h1 class="titulo">Umbra Ecclesia</h1>
-        </div>
-        <div class="options">
-            <div class="index">
-                <a href="../paginas/index.html">Home Page</a>
+    <header class="topbar">
+        <a class="brand" href="/index.html"><img src="/assets/logo_umbra.png" alt="Logo Umbra Ecclesia"><span>Umbra Ecclesia</span></a>
+        <nav aria-label="Navegação principal"><a href="/index.html">Home</a><a href="/dashboard.html">Dashboard</a><a class="active" href="/cadastroD.html">Preferências</a></nav>
+    </header>
+
+    <main class="form-page">
+        <p class="eyebrow">Registro da congregação</p>
+        <h1>Declare suas preferências</h1>
+        <form class="preference-form" id="preference-form">
+            <div class="field">
+                <label for="opt_papa">Seu papa favorito</label>
+                <select id="opt_papa" required>
+                    <option value="">Selecione um papa</option>
+                    <option value="Nihil">Nihil (Papa Emeritus 0)</option>
+                    <option value="Primo">Primo (Papa Emeritus I)</option>
+                    <option value="Secondo">Secondo (Papa Emeritus II)</option>
+                    <option value="Terzo">Terzo (Papa Emeritus III)</option>
+                    <option value="Cardinal Copia">Cardinal Copia</option>
+                    <option value="Cuarto">Cuarto (Papa Emeritus IV)</option>
+                    <option value="Perpetua">Perpetua (Papa Emeritus V)</option>
+                </select>
             </div>
-            <div class="questionario">
-                <a href="../paginas/cadastroD.html">Questionario</a>
+            <div class="field">
+                <label for="ipt_musica">Sua música favorita de Ghost</label>
+                <input type="text" id="ipt_musica" placeholder="Ex.: Cirice" required>
             </div>
-        </div>
-    </div>
-    <div class="questionario">
-        <label for="opt_papa">Selecione seu papa favorito</label><br><br>
-        <select id="opt_papa">
-            <option value="">Nihil (Papa Emeritus 0)</option>
-            <option value="">Primo (Papa Emeritus I)</option>
-            <option value="">Secondo (Papa Emeritus II)</option>
-            <option value="">Terzo (Papa Emeritus III)</option>
-            <option value="">Cardinal Copia</option>
-            <option value="">Cuarto (Papa Emeritus IV)</option>
-            <option value="">Perpetua (Papa Emeritus V)</option>
-        </select><br><br>
-        <label for="ipt_musica">Insira sua musica favorita de Ghost</label><br><br>
-        <input type="text" id="ipt_musica"><br><br>
-        <label>Selecione seu album favorito</label><br><br>
-        <input type="hidden" id="opt_album" value="">
-        <div class="album-opcoes" aria-label="Álbuns de Ghost">
-            <label class="album-opcao">
-                <input type="radio" name="album" value="opus">
-                <img src="../assets/albuns/opus_eponimous.png" alt="Opus Eponymous">
-                <span>Opus Eponymous</span>
-            </label>
-            <label class="album-opcao">
-                <input type="radio" name="album" value="infestissuman">
-                <img src="../assets/albuns/infestissuman.png" alt="Infestissumam">
-                <span>Infestissumam</span>
-            </label>
-            <label class="album-opcao">
-                <input type="radio" name="album" value="meliora">
-                <img src="../assets/albuns/meliora.png" alt="Meliora">
-                <span>Meliora</span>
-            </label>
-            <label class="album-opcao">
-                <input type="radio" name="album" value="ghosts">
-                <img src="../assets/albuns/ghosts.png" alt="If You Have Ghosts">
-                <span>If You Have Ghosts</span>
-            </label>
-            <label class="album-opcao">
-                <input type="radio" name="album" value="impera">
-                <img src="../assets/albuns/impera.png" alt="Impera">
-                <span>Impera</span>
-            </label>
-            <label class="album-opcao">
-                <input type="radio" name="album" value="prequelle">
-                <img src="../assets/albuns/prequelle.png" alt="Prequelle">
-                <span>Prequelle</span>
-            </label>
-            <label class="album-opcao">
-                <input type="radio" name="album" value="seven_inches">
-                <img src="../assets/albuns/seven_inches.png" alt="Seven Inches of Satanic Panic">
-                <span>Seven Inches</span>
-            </label>
-            <label class="album-opcao">
-                <input type="radio" name="album" value="skeleta">
-                <img src="../assets/albuns/skeleta.png" alt="Skeleta">
-                <span>Skeleta</span>
-            </label>
-        </div><br>
-        <label for="ipt_personagem">Insira seu personagem favorito</label><br><br>
-        <input type="text" id="ipt_personagem">
-    </div>
-    <button onclick="cadastrar()">Cadastrar resposta</button>
+            <div class="field">
+                <label>Seu álbum favorito</label>
+                <div class="album-opcoes" aria-label="Álbuns de Ghost">
+                    <label class="album-opcao"><input type="radio" name="album" value="Opus Eponymous" required><img src="/assets/albuns/opus_eponimous.png" alt="Opus Eponymous"><span>Opus Eponymous</span></label>
+                    <label class="album-opcao"><input type="radio" name="album" value="Infestissumam"><img src="/assets/albuns/infestissuman.png" alt="Infestissumam"><span>Infestissumam</span></label>
+                    <label class="album-opcao"><input type="radio" name="album" value="Meliora"><img src="/assets/albuns/meliora.png" alt="Meliora"><span>Meliora</span></label>
+                    <label class="album-opcao"><input type="radio" name="album" value="If You Have Ghosts"><img src="/assets/albuns/ghosts.png" alt="If You Have Ghosts"><span>If You Have Ghosts</span></label>
+                    <label class="album-opcao"><input type="radio" name="album" value="Impera"><img src="/assets/albuns/impera.png" alt="Impera"><span>Impera</span></label>
+                    <label class="album-opcao"><input type="radio" name="album" value="Prequelle"><img src="/assets/albuns/prequelle.png" alt="Prequelle"><span>Prequelle</span></label>
+                    <label class="album-opcao"><input type="radio" name="album" value="Seven Inches of Satanic Panic"><img src="/assets/albuns/seven_inches.png" alt="Seven Inches of Satanic Panic"><span>Seven Inches</span></label>
+                    <label class="album-opcao"><input type="radio" name="album" value="Skeleta"><img src="/assets/albuns/skeleta.png" alt="Skeleta"><span>Skeleta</span></label>
+                </div>
+            </div>
+            <div class="field">
+                <label for="ipt_personagem">Seu personagem favorito</label>
+                <input type="text" id="ipt_personagem" placeholder="Ex.: Papa Nihil" required>
+            </div>
+            <div class="form-actions"><button type="submit">Cadastrar resposta</button><span class="feedback" id="feedback" role="status"></span></div>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('preference-form').addEventListener('submit', async function (evento) {
+            evento.preventDefault();
+            const feedback = document.getElementById('feedback');
+            const usuarioId = sessionStorage.getItem('ID_USUARIO');
+
+            if (!usuarioId) {
+                feedback.textContent = 'Faça login antes de registrar suas preferências.';
+                return;
+            }
+
+            const album = document.querySelector('input[name="album"]:checked');
+            const resposta = {
+                usuarioIdServer: usuarioId,
+                nomeServer: document.getElementById('opt_papa').value,
+                tituloServer: document.getElementById('ipt_musica').value,
+                senhaServer: album ? album.value : '',
+                personagemServer: document.getElementById('ipt_personagem').value
+            };
+
+            feedback.textContent = 'Registrando resposta...';
+            try {
+                const resultado = await fetch('/preferencias/cadastrar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(resposta)
+                });
+                const corpo = await resultado.json();
+                if (!resultado.ok) throw new Error(corpo.erro);
+                feedback.textContent = corpo.mensagem;
+                this.reset();
+            } catch (erro) {
+                feedback.textContent = erro.message || 'Não foi possível cadastrar a resposta.';
+            }
+        });
+    </script>
 </body>
 </html>
-<script>
-    function cadastrar(){
-        var papa = opt_papa.value;
-        var musica = ipt_musica.value;
-        var albumSelecionado = document.querySelector('input[name="album"]:checked');
-        var album = albumSelecionado ? albumSelecionado.value : "";
-        var personagem = ipt_personagem.value;
-
-    // Verificando se há algum campo em branco
-    if (
-      papa == "" ||
-      musica == "" ||
-      album == "" ||
-      personagem == ""
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
-
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: papa,
-        tituloServer: musica,
-        senhaServer: album,
-        personagemServer : personagem,
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          cardErro.style.display = "block";
-
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
-
-    return false;
-    }
-</script>

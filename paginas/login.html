@@ -10,36 +10,36 @@
     <script src="./js/sessao.js"></script>
 
     <link rel="stylesheet" href="">
-    <link rel="icon" href="../assets/logo_umbra.png">
+    <link rel="icon" href="./logo_umbra.png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 <body>
     <div class="header">
       <div class="container">
-        <a href="index.html"><img src="../assets/logo_umbra.png" alt=""></a>
+        <a href="index.html"><img src="./logo_umbra.png" alt=""></a>
         <h1 class="titulo">Umbra Ecclesia</h1>
         <ul class="navbar">
           <li>
-            <a href="../paginas/clero.html">O Clero</a>
+            <a href="/clero.html">O Clero</a>
           </li>
           <li>|</li>
           <li>
-            <a href="../paginas/escrituras.html">As Escrituras</a>
+            <a href="/escrituras.html">As Escrituras</a>
           </li>
           <li>|</li>
           <li>
             <a href="#">Galeria</a>
           </li>
-          <a href="../paginas/cadastro.html"><button class="botao-cadastro">Cadastro</button></a>
-          <a href="../paginas/login.html"><button class="botao-login">Login</button></a>
+          <a href="/cadastro.html"><button class="botao-cadastro">Cadastro</button></a>
+          <a href="/login.html"><button class="botao-login">Login</button></a>
         </ul>
       </div>
     </div>
     <div class="sidebannerL">
-        <img src="../assets/side_banner.png" alt="banner_fumaca">
+        <img src="./side_banner.png" alt="banner_fumaca">
     </div>
     <div class="sidebannerR">
-        <img src="../assets/side_banner.png" alt="banner_fumaca">
+        <img src="./side_banner.png" alt="banner_fumaca">
     </div>
     <div class="login">
         <div class="alerta_erro">
@@ -119,7 +119,7 @@
                     sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
 
                     setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
+                        window.location = "./dashboard.html";
                     }, 1000); // apenas para exibir o loading
 
                 });
