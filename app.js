@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "paginas")));
 app.use(express.static(path.join(__dirname, "style")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use("/usuarios", usuarioRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/preferencias", preferenciasRouter);

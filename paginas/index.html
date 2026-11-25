@@ -50,7 +50,34 @@
         </div>
     </header>
   
-    <div class="banner">
+    <div class="banner" data-carousel aria-label="Galeria de imagens da Umbra Ecclesia">
+        <div class="carousel-track">
+            <img class="carousel-slide is-active"
+                 src="../assets/banner_carrossel/banner_umbra_1.png"
+                 alt="Umbra Ecclesia"
+                 aria-hidden="false">
+            <img class="carousel-slide"
+                 src="../assets/banner_carrossel/banner_umbra_2.jpg"
+                 alt="Atmosfera sombria do Ghost"
+                 aria-hidden="true">
+            <img class="carousel-slide"
+                 src="../assets/banner_carrossel/banner_umbra_3.jpg"
+                 alt="Identidade visual do Ghost"
+                 aria-hidden="true">
+        </div>
+
+        <button class="carousel-button carousel-button-prev" type="button" aria-label="Imagem anterior">
+            &#10094;
+        </button>
+        <button class="carousel-button carousel-button-next" type="button" aria-label="Próxima imagem">
+            &#10095;
+        </button>
+
+        <div class="carousel-dots" role="tablist" aria-label="Selecionar imagem">
+            <button class="carousel-dot is-active" type="button" role="tab" aria-label="Exibir imagem 1" aria-selected="true"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Exibir imagem 2" aria-selected="false"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Exibir imagem 3" aria-selected="false"></button>
+        </div>
     </div>
 
   <div class="msg_clero">
@@ -146,10 +173,32 @@
     <div class="escrituras">
       <a href="../paginas/escrituras.html"><h2>As Escrituras</h2></a>
       <h3 class="discos">A Discografia</h3>
-      <img src="../assets/albuns/opus_eponimous.png" alt="opus_eponimous">
-      <img src="../assets/albuns/infestissuman.png" alt="infestissuman">
-      <img src="../assets/albuns/ghosts.png" alt="if_you_have_ghosts">
-      <img src="../assets/albuns/meliora.png" alt="meliora">
+      <div class="album-carousel" data-album-carousel>
+        <button class="album-carousel-button album-carousel-button-prev" type="button" aria-label="Álbum anterior">
+          &#10094;
+        </button>
+
+        <div class="album-carousel-viewport">
+          <div class="album-track">
+            <img class="album-card" src="../assets/albuns/opus_eponimous.png" alt="Capa do álbum Opus Eponymous">
+            <img class="album-card" src="../assets/albuns/infestissuman.png" alt="Capa do álbum Infestissumam">
+            <img class="album-card" src="../assets/albuns/ghosts.png" alt="Capa do álbum If You Have Ghosts">
+            <img class="album-card" src="../assets/albuns/meliora.png" alt="Capa do álbum Meliora">
+            <img class="album-card" src="../assets/albuns/impera.png" alt="Capa do álbum Impera">
+            <img class="album-card" src="../assets/albuns/prequelle.png" alt="Capa do álbum Prequelle">
+            <img class="album-card" src="../assets/albuns/seven_inches.png" alt="Capa do álbum Seven Inches of Satanic Panic">
+            <img class="album-card" src="../assets/albuns/skeleta.png" alt="Capa do álbum Skeletá">
+            <img class="album-card" src="../assets/albuns/opus_eponimous.png" alt="Capa do álbum Opus Eponymous">
+            <img class="album-card" src="../assets/albuns/infestissuman.png" alt="Capa do álbum Infestissumam">
+          </div>
+        </div>
+
+        <button class="album-carousel-button album-carousel-button-next" type="button" aria-label="Próximo álbum">
+          &#10095;
+        </button>
+
+        <div class="album-carousel-dots" role="tablist" aria-label="Selecionar grupo de álbuns"></div>
+      </div>
       <p>Os álbuns que marcaram a trajetória da congregação.</p>
     </div>
   
@@ -166,3 +215,110 @@
   </body>
 
 </html>
+<script>
+        const carousel = document.querySelector('[data-carousel]');
+        const slides = [...carousel.querySelectorAll('.carousel-slide')];
+        const dots = [...carousel.querySelectorAll('.carousel-dot')];
+        let currentSlide = 0;
+        let autoplay;
+
+        function showSlide(index) {
+            currentSlide = (index + slides.length) % slides.length;
+
+            slides.forEach((slide, slideIndex) => {
+                const isActive = slideIndex === currentSlide;
+                slide.classList.toggle('is-active', isActive);
+                slide.setAttribute('aria-hidden', String(!isActive));
+            });
+
+            dots.forEach((dot, dotIndex) => {
+                const isActive = dotIndex === currentSlide;
+                dot.classList.toggle('is-active', isActive);
+                dot.setAttribute('aria-selected', String(isActive));
+            });
+        }
+
+        function startAutoplay() {
+            clearInterval(autoplay);
+            autoplay = setInterval(() => showSlide(currentSlide + 1), 5000);
+        }
+
+        carousel.querySelector('.carousel-button-prev').addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+            startAutoplay();
+        });
+
+        carousel.querySelector('.carousel-button-next').addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+            startAutoplay();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+                startAutoplay();
+            });
+        });
+
+        carousel.addEventListener('mouseenter', () => clearInterval(autoplay));
+        carousel.addEventListener('mouseleave', startAutoplay);
+        carousel.addEventListener('focusin', () => clearInterval(autoplay));
+        carousel.addEventListener('focusout', startAutoplay);
+        startAutoplay();
+
+        const albumCarousel = document.querySelector('[data-album-carousel]');
+        const albumTrack = albumCarousel.querySelector('.album-track');
+        const albumViewport = albumCarousel.querySelector('.album-carousel-viewport');
+        const albumCards = [...albumCarousel.querySelectorAll('.album-card')];
+        const albumDots = albumCarousel.querySelector('.album-carousel-dots');
+        let albumPage = 0;
+
+        function getAlbumsPerView() {
+            return window.matchMedia('(max-width: 900px)').matches ? 4 : 5;
+        }
+
+        function renderAlbumDots() {
+            const albumsPerView = getAlbumsPerView();
+            const pageCount = Math.ceil(8 / albumsPerView);
+            albumDots.innerHTML = '';
+
+            for (let index = 0; index < pageCount; index += 1) {
+                const dot = document.createElement('button');
+                dot.className = 'album-carousel-dot';
+                dot.type = 'button';
+                dot.setAttribute('role', 'tab');
+                dot.setAttribute('aria-label', `Exibir grupo de álbuns ${index + 1}`);
+                dot.addEventListener('click', () => showAlbumPage(index));
+                albumDots.appendChild(dot);
+            }
+        }
+
+        function showAlbumPage(page) {
+            const albumsPerView = getAlbumsPerView();
+            const pageCount = Math.ceil(8 / albumsPerView);
+            albumPage = Math.max(0, Math.min(page, pageCount - 1));
+            albumTrack.style.transform = `translateX(-${albumPage * albumViewport.clientWidth}px)`;
+
+            [...albumDots.children].forEach((dot, index) => {
+                const isActive = index === albumPage;
+                dot.classList.toggle('is-active', isActive);
+                dot.setAttribute('aria-selected', String(isActive));
+            });
+        }
+
+        albumCarousel.querySelector('.album-carousel-button-prev').addEventListener('click', () => {
+            showAlbumPage(albumPage - 1);
+        });
+
+        albumCarousel.querySelector('.album-carousel-button-next').addEventListener('click', () => {
+            showAlbumPage(albumPage + 1);
+        });
+
+        window.addEventListener('resize', () => {
+            renderAlbumDots();
+            showAlbumPage(albumPage);
+        });
+
+        renderAlbumDots();
+        showAlbumPage(0);
+    </script>
