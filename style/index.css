@@ -1,3 +1,144 @@
+/* Remove as configurações padrão do navegador */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* FONTES */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap');
+
+/* HEADER */
+
+.header {
+    width: 100%;
+    height: 85px;
+
+    background-color: #A60000;
+
+    border-bottom: 2px solid #B99A50;
+}
+
+/* CONTAINER */
+
+.container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 25px;
+}
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: #000;
+
+    flex-shrink: 0;
+}
+
+.logo img {
+    width: 38px;
+    height: 55px;
+
+    object-fit: contain;
+}
+
+.logo h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* NAVEGAÇÃO */
+
+.navbar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.navbar a {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+
+    color: #000;
+    text-decoration: none;
+
+    padding: 8px 12px;
+
+    border-right: 1px solid #B99A50;
+    white-space: nowrap;
+
+    transition: color 0.3s;
+}
+
+.navbar a:last-child {
+    border-right: none;
+}
+
+.navbar a:hover {
+    color: #D6B36A;
+}
+
+/* BOTÕES */
+
+.botoes {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-left: 20px;
+}
+
+.botoes a {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+
+    text-decoration: none;
+
+    padding: 8px 12px;
+    border-radius: 6px;
+
+    transition: 0.3s;
+}
+
+/* CADASTRO */
+
+.botao-cadastro {
+    color: #D6B36A;
+    border: 1px solid #D6B36A;
+    background: transparent;
+}
+
+.botao-cadastro:hover {
+    background-color: #D6B36A;
+    color: #000;
+}
+
+/* LOGIN */
+
+.botao-login {
+    color: #111;
+    background-color: #B5B5B5;
+    border: 1px solid #B5B5B5;
+}
+
+.botao-login:hover {
+    background-color: #D6B36A;
+    border-color: #D6B36A;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,20 +147,206 @@ body {
   color: antiquewhite;
 }
 
-.header {
-  background-color: #b90008;
-  color: #111111;
-  border-bottom: #c5a059;
-  list-style: none;
+/* MENSAGEM DO CLERO */
+
+.msg_clero {
+    width: 100%;
+
+    background-color: #111111;
+
+    padding: 20px 35px;
+
+    border-bottom: 2px solid #B99A50;
 }
 
-.container titulo {
-  display: flex;
-  color: #111111;
+/* TÍTULO */
+
+.msg_clero h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 19px;
+    font-weight: normal;
+
+    color: #E5E5E5;
+
+    margin-bottom: 3px;
 }
+
+/* TEXTO */
+
+.msg_clero p {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+
+    color: #E5E5E5;
+
+    line-height: 1.35;
+    text-align: justify;
+
+    margin: 0;
+}
+
+/* SEÇÃO SOBRE MIM */
+
+.sobre_mim {
+    width: 100%;
+    min-height: 400px;
+
+    background-color: #111111;
+
+    padding: 35px 45px;
+
+    border-top: 2px solid #B99A50;
+}
+
+/* TÍTULO */
+
+.sobre_mim h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 23px;
+    font-weight: normal;
+
+    color: #E5E5E5;
+
+    text-transform: uppercase;
+
+    margin-bottom: 12px;
+    margin-left: 20px;
+}
+
+/* ÁREA DA FOTO E DO TEXTO */
+
+.sobre_container {
+    display: flex;
+    align-items: center;
+
+    gap: 60px;
+
+    margin-top: 10px;
+}
+
+/* FOTO */
+
+.sobre_container img {
+    width: 190px;
+    height: 260px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    flex-shrink: 0;
+
+    /* Efeito de moldura */
+    box-shadow: 0 5px 0 #E5E5E5;
+}
+
+/* TEXTO */
+
+.sobre_conteudo {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    gap: 25px;
+}
+
+.sobre_conteudo p {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+
+    color: #E5E5E5;
+
+    line-height: 1.35;
+    text-align: justify;
+}
+
+/* FRASE FINAL */
+
+.sobre_conteudo h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: normal;
+
+    color: #E5E5E5;
+
+    text-align: center;
+    font-style: italic;
+}
+
+/* SEÇÃO DOS SACERDOTES */
+
+/* SEÇÃO DOS PAPAS */
 
 .sacerdotes {
-  background-color: #323232;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin: 15px auto;
+
+    background-color: #303030;
+
+    padding: 15px;
+}
+
+.papas {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.papas h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: normal;
+
+    color: #E5E5E5;
+
+    margin: 0 0 8px 0;
+    text-decoration: none;
+}
+
+.pontificies {
+    font-family: 'Cinzel', serif;
+    font-size: 19px;
+    font-weight: normal;
+
+    color: #B00000;
+
+    text-transform: uppercase;
+
+    margin: 0 0 28px 0;
+}
+
+.imagem-papas {
+    display: block;
+
+    width: 80%;
+    max-width: 650px;
+
+    height: 360px;
+
+    object-fit: cover;
+
+    margin: 0 auto 45px auto;
+}
+
+.descricao-papas {
+    padding: 0 5px 35px 5px;
+}
+
+.descricao-papas p {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+
+    color: #E5E5E5;
+
+    line-height: 1.35;
+
+    text-align: justify;
+    text-indent: 35px;
+
+    margin: 0;
 }
 
 .footer {
